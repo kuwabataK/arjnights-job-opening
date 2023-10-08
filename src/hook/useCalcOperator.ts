@@ -42,7 +42,9 @@ export default function useCalcOperator() {
         const tagSets = getAllTagSets(tagNames)
         const result = tagSets.map((tags) => {
             const _operators = _getAvailableOperators(tags)
-            const rare = Math.min(..._operators.map(ope => ope.rare || 3))
+            const rares = _operators.map(ope => ope.rare === 1 ? null : ope.rare).filter(Boolean) as number[] // 星１は外す
+            const fixedRares = rares.length !== 0 ? rares : [1]
+            const rare = Math.min(...fixedRares)
             return {
                 tagName: tags.reduce((acc, cur, index) => {
                     if (index === 0) {
@@ -54,7 +56,7 @@ export default function useCalcOperator() {
                 rare
             }
         }).filter(r => r.operators.length !== 0)
-        return _.uniqBy(result, 'tagName')
+        return _.uniqBy(result, 'tagName').sort((a,b) => b.rare - a.rare)
     }
 
     return {
