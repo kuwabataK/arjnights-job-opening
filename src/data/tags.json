@@ -1,0 +1,153 @@
+[
+    {
+        "name": "先鋒",
+        "rare": 3,
+        "category": "タイプ"
+    },
+    {
+        "name": "前衛",
+        "rare": 3,
+        "category": "タイプ"
+    },
+    {
+        "name": "狙撃",
+        "rare": 3,
+        "category": "タイプ"
+    },
+    {
+        "name": "重装",
+        "rare": 3,
+        "category": "タイプ"
+    },
+    {
+        "name": "医療",
+        "rare": 3,
+        "category": "タイプ"
+    },
+    {
+        "name": "術師",
+        "rare": 3,
+        "category": "タイプ"
+    },
+    {
+        "name": "補助",
+        "rare": 3,
+        "category": "タイプ"
+    },
+    {
+        "name": "特殊",
+        "rare": 3,
+        "category": "タイプ"
+    },
+
+
+
+    {
+        "name": "近距離",
+        "rare": 3,
+        "category": "位置"
+    },
+    {
+        "name": "遠距離",
+        "rare": 3,
+        "category": "位置"
+    },
+    {
+        "name": "火力",
+        "rare": 3,
+        "category": "タグ"
+    },
+    {
+        "name": "防御",
+        "rare": 3,
+        "category": "タグ"
+    },
+    {
+        "name": "COST回復",
+        "rare": 3,
+        "category": "タグ"
+    },
+    {
+        "name": "範囲攻撃",
+        "rare": 3,
+        "category": "タグ"
+    },
+    {
+        "name": "生存",
+        "rare": 3,
+        "category": "タグ"
+    },
+
+
+
+    {
+        "name": "治療",
+        "rare": 3,
+        "category": "タグ"
+    },
+    {
+        "name": "支援",
+        "rare": 4,
+        "category": "タグ"
+    },
+    {
+        "name": "弱化",
+        "rare": 4,
+        "category": "タグ"
+    },
+    {
+        "name": "減速",
+        "rare": 3,
+        "category": "タグ"
+    },
+
+
+    {
+        "name": "強制移動",
+        "rare": 4,
+        "category": "タグ"
+    },
+    {
+        "name": "牽制",
+        "rare": 4,
+        "category": "タグ"
+    },
+    {
+        "name": "爆発力",
+        "rare": 4,
+        "category": "タグ"
+    },
+    {
+        "name": "召喚",
+        "rare": 5,
+        "category": "タグ"
+    },
+
+
+    {
+        "name": "高速再配置",
+        "rare": 4,
+        "category": "タグ"
+    },
+    {
+        "name": "初期",
+        "rare": 2,
+        "category": "タグ"
+    },
+    {
+        "name": "ロボット",
+        "rare": 1,
+        "category": "タグ"
+    },
+    {
+        "name": "エリート",
+        "rare": 5,
+        "category": "タグ"
+    },
+    
+    {
+        "name": "上級エリート",
+        "rare": 6,
+        "category": "タグ"
+    }
+]
