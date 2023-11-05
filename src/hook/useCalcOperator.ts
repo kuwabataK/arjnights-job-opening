@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import CsvPerser from '../util/CsvPerser';
+import OperatorJsonParser from '../util/OperatorJsonParser';
 import { useEffect, useState } from 'react';
 
 const getAllSubsets =
@@ -22,15 +22,16 @@ export default function useCalcOperator() {
 
 
     useEffect(() => {
-        const ope = CsvPerser.perseToDataJson().filter(Boolean)
-        console.log(ope)
+        const ope = OperatorJsonParser.perseToDataJson().filter(Boolean)
         if (ope.every(o => o.name)){
             setOpe(ope)
         }
     },[])
 
     const _getAvailableOperators = (tagNames: string[]) => {
-        return operators.filter(ope => tagNames.every(id => ope.tags.includes(id)))
+        const opes = operators.filter(ope => tagNames.every(id => ope.tags.includes(id)))
+        // ★6は上級エリートを必須にする
+        return tagNames.includes('上級エリート') ? opes : opes.filter(ope => ope.rare !== 6)
     }
 
     const getAllTagSets = (tagNames: string[]) => {

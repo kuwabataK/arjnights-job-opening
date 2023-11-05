@@ -1,18 +1,23 @@
 import operatorCsvJson from '../data/operatorsCsv.json'
 
-export default class CsvPerser{
+export default class OperatorJsonParser{
 
     private static getTags(obj: Record<string,string>){
         const removedObj = obj
+        const rare = Number( obj['★']?.replace('★',''))
         const type = removedObj.タイプ
         delete removedObj.名前
         delete removedObj['★']
         delete removedObj.タイプ
         delete removedObj.追加日
-        return [type, ...Object.entries(removedObj).map(([key, value]) => {
+        const tags = [type, ...Object.entries(removedObj).map(([key, value]) => {
             if (value !== '') return key
             return null
-        }).filter(Boolean)] 
+        }).filter(Boolean)]
+        if (rare === 5) {
+            return [...tags, 'エリート']
+        }
+        return tags
     }
 
     static perseToDataJson(){
