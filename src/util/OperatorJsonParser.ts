@@ -24,7 +24,7 @@ export default class OperatorJsonParser{
         return operatorCsvJson.map(o => {
             return {
                 name: o.名前,
-                rare: Number( o['★']?.replace('★','')),
+                rare: Number( o['★']?.replace('★','')) ?? 3,
                 tags: this.getTags(o) as string[]
             }
         })

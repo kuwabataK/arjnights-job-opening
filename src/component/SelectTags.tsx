@@ -38,10 +38,19 @@ function SelectTags() {
         }
     })
 
+    /**
+     * 選択されているかどうか
+     * @param name 
+     * @returns 
+     */
     const isSelected = (name: string) => {
         return selectedTagIds.includes(name)
     }
 
+    /**
+     * タグの選択状態を切り替える
+     * @param name 
+     */
     const toggleTag = (name: string) => {
         if (isSelected(name)) {
             setSelectedTagIds(selectedTagIds.filter(_name => _name !== name))
