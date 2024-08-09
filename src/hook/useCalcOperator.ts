@@ -2,6 +2,11 @@ import _ from 'lodash'
 import OperatorJsonParser from '../util/OperatorJsonParser';
 import { useEffect, useState } from 'react';
 
+/**
+ * 引数に指定した配列の全ての部分集合を取得する
+ * @param theArray 
+ * @returns 
+ */
 const getAllSubsets =
     (theArray: string[]) => theArray.reduce(
         (subsets, value) => subsets.concat(
