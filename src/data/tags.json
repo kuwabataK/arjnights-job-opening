@@ -88,12 +88,12 @@
     {
         "name": "支援",
         "rare": 4,
-        "category": "タグ"
+        "category": "レアタグ"
     },
     {
         "name": "弱化",
         "rare": 4,
-        "category": "タグ"
+        "category": "レアタグ"
     },
     {
         "name": "減速",
@@ -105,29 +105,29 @@
     {
         "name": "強制移動",
         "rare": 4,
-        "category": "タグ"
+        "category": "レアタグ"
     },
     {
         "name": "牽制",
         "rare": 4,
-        "category": "タグ"
+        "category": "レアタグ"
     },
     {
         "name": "爆発力",
         "rare": 4,
-        "category": "タグ"
+        "category": "レアタグ"
     },
     {
         "name": "召喚",
         "rare": 5,
-        "category": "タグ"
+        "category": "レアタグ"
     },
 
 
     {
         "name": "高速再配置",
         "rare": 4,
-        "category": "タグ"
+        "category": "レアタグ"
     },
     {
         "name": "初期",
