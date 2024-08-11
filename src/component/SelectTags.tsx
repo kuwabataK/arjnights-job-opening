@@ -47,26 +47,28 @@ function SelectTags() {
 
                     if (!r.tagName) return
 
-                    return <Card sx={{ minWidth: 275 }} key={r.tagName}>
-                        <CardContent>
-                            <Typography sx={{ fontSize: 14, fontWeight: 'bold' }} color="text.secondary" gutterBottom>
-                                {r.tagName}
-                            </Typography>
-                            <Typography sx={{ fontSize: 14 }}
-                                color={getRareColor(r.rare)}
-                                gutterBottom>
-                                {'★' + r.rare}
-                            </Typography>
-                            <Typography variant="h5" component="div">
-                                {r.operators.map((ope) => {
-                                    return <Chip label={ope.name} style={chipColor[ope.rare] as any}
-                                        variant='outlined'
-                                        key={ope.name}
-                                    />
-                                })}
-                            </Typography>
-                        </CardContent>
-                    </Card>
+                    return (
+                        <Card sx={{ minWidth: 275, maxWidth: 800, margin: '0 auto' }} key={r.tagName}>
+                            <CardContent>
+                                <Typography sx={{ fontSize: 14, fontWeight: 'bold' }} color="text.secondary" gutterBottom>
+                                    {r.tagName}
+                                </Typography>
+                                <Typography sx={{ fontSize: 14 }}
+                                    color={getRareColor(r.rare)}
+                                    gutterBottom>
+                                    {'★' + r.rare}
+                                </Typography>
+                                <Typography variant="h5" component="div">
+                                    {r.operators.map((ope) => {
+                                        return <Chip label={ope.name} style={chipColor[ope.rare] as any}
+                                            variant='outlined'
+                                            key={ope.name}
+                                        />
+                                    })}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    )
                 })}
             </>
         )
@@ -82,7 +84,7 @@ function SelectTags() {
 
     return (
         <>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} sx={{ width: 800, margin: '0 auto' }}>
                 <Table>
                     <TableBody>
                         {Object.entries(groupedTags).map(([category, tags]) => (
