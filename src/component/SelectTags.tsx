@@ -1,65 +1,32 @@
-import { Card, CardContent, Chip, Typography } from '@mui/material'
-import tags from '../data/tags.json'
-import { useState } from 'react'
-import useCalcOperator from '../hook/useCalcOperator'
-
-
+import { Card, CardContent, Chip, Typography, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Paper } from '@mui/material';
+import tags from '../data/tags.json';
+import { useState } from 'react';
+import useCalcOperator from '../hook/useCalcOperator';
 
 function SelectTags() {
-
-    const { getAvailableOperators } = useCalcOperator()
-
-    const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
+    const { getAvailableOperators } = useCalcOperator();
+    const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
 
     const [chipColor] = useState<Record<number, Object>>({
-        1: {
-            borderColor: `orange`,
-            // backgroundColor: `orange`,
-        },
-        2: {
-            borderColor: `black`,
-            // backgroundColor: `black`
-        },
-        3: {
-            borderColor: `black`,
-            // backgroundColor: `black`
-        },
-        4: {
-            borderColor: `blue`,
-            // backgroundColor: `blue`
-        },
-        5: {
-            borderColor: `red`,
-            // backgroundColor: `red`
-        },
-        6: {
-            borderColor: `purple`,
-            // backgroundColor: `purple`
-        }
-    })
+        1: { borderColor: 'orange' },
+        2: { borderColor: 'black' },
+        3: { borderColor: 'black' },
+        4: { borderColor: 'blue' },
+        5: { borderColor: 'red' },
+        6: { borderColor: 'purple' },
+    });
 
-    /**
-     * 選択されているかどうか
-     * @param name 
-     * @returns 
-     */
-    const isSelected = (name: string) => {
-        return selectedTagIds.includes(name)
-    }
+    const isSelected = (name: string) => selectedTagIds.includes(name);
 
-    /**
-     * タグの選択状態を切り替える
-     * @param name 
-     */
     const toggleTag = (name: string) => {
         if (isSelected(name)) {
-            setSelectedTagIds(selectedTagIds.filter(_name => _name !== name))
+            setSelectedTagIds(selectedTagIds.filter(_name => _name !== name));
         } else if (selectedTagIds.length < 5) {
-            setSelectedTagIds([name, ...selectedTagIds])
+            setSelectedTagIds([name, ...selectedTagIds]);
         }
-    }
+    };
 
-    const resultOperators = getAvailableOperators(selectedTagIds)
+    const resultOperators = getAvailableOperators(selectedTagIds);
 
     const getRareColor = (rare: number) => {
         const rareColors: Record<number, string> = {
@@ -68,10 +35,10 @@ function SelectTags() {
             3: 'black',
             4: 'blue',
             5: 'red',
-            6: 'purple'
-        }
-        return rareColors[rare] as string
-    }
+            6: 'purple',
+        };
+        return rareColors[rare];
+    };
 
     const resultComponent = (result: typeof resultOperators) => {
         return (
@@ -105,17 +72,46 @@ function SelectTags() {
         )
     }
 
+    const groupedTags = tags.reduce((acc, tag) => {
+        if (!acc[tag.category]) {
+            acc[tag.category] = [];
+        }
+        acc[tag.category].push(tag);
+        return acc;
+    }, {} as Record<string, typeof tags>);
 
     return (
         <>
-            {tags.map(tag => {
-                return <Chip label={tag.name} color="success"
-                    variant={isSelected(tag.name) ? 'filled' : 'outlined'}
-                    key={tag.name} onClick={() => toggleTag(tag.name)} />
-            })}
+            <TableContainer component={Paper}>
+                <Table>
+                    <TableBody>
+                        {Object.entries(groupedTags).map(([category, tags]) => (
+                            <TableRow key={category}>
+                                <TableCell>
+                                    <Typography variant="h6">{category}</Typography>
+                                </TableCell>
+                                <TableCell>
+                                    <Grid container spacing={1}>
+                                        {tags.map(tag => (
+                                            <Grid item key={tag.name}>
+                                                <Chip
+                                                    label={tag.name}
+                                                    color="success"
+                                                    variant={isSelected(tag.name) ? 'filled' : 'outlined'}
+                                                    onClick={() => toggleTag(tag.name)}
+                                                />
+                                            </Grid>
+                                        ))}
+                                    </Grid>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
             {resultComponent(resultOperators)}
         </>
-    )
+    );
 }
 
-export default SelectTags
+export default SelectTags;

@@ -137,16 +137,16 @@
     {
         "name": "ロボット",
         "rare": 1,
-        "category": "タグ"
+        "category": "レア度"
     },
     {
         "name": "エリート",
         "rare": 5,
-        "category": "タグ"
+        "category": "レア度"
     },
     {
         "name": "上級エリート",
         "rare": 6,
-        "category": "タグ"
+        "category": "レア度"
     }
 ]
