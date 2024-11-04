@@ -1,4 +1,4 @@
-import { Card, CardContent, Chip, Typography, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Paper } from '@mui/material';
+import { Card, CardContent, Chip, Typography, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Paper, Button } from '@mui/material';
 import tags from '../data/tags.json';
 import { useState } from 'react';
 import useCalcOperator from '../hook/useCalcOperator';
@@ -24,6 +24,10 @@ function SelectTags() {
         } else if (selectedTagIds.length < 5) {
             setSelectedTagIds([name, ...selectedTagIds]);
         }
+    };
+
+    const resetTags = () => {
+        setSelectedTagIds([]);
     };
 
     const resultOperators = getAvailableOperators(selectedTagIds);
@@ -111,6 +115,9 @@ function SelectTags() {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Button variant="contained" color="primary" onClick={resetTags} sx={{ display: 'block', margin: '20px auto' }}>
+                リセット
+            </Button>
             {resultComponent(resultOperators)}
         </>
     );
