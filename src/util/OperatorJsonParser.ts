@@ -2,7 +2,7 @@ import operatorCsvJson from '../data/operatorsCsv.json'
 
 export default class OperatorJsonParser{
 
-    private static getTags(obj: Record<string,string>){
+    private static getTags(obj: Record<string,string | undefined>){
         const removedObj = obj
         const rare = Number( obj['★']?.replace('★',''))
         const type = removedObj.タイプ

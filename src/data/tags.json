@@ -140,6 +140,11 @@
         "category": "レア度"
     },
     {
+        "name": "元素",
+        "rare": 1,
+        "category": "タグ"
+    },
+    {
         "name": "エリート",
         "rare": 5,
         "category": "レア度"
