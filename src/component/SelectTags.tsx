@@ -53,6 +53,13 @@ function SelectTags() {
 
     const {loadClipBoardImage} = usePasteImage({callback: recognaizeTagFromClipboadImage})
 
+    const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            await recognaizeTagFromClipboadImage(file);
+        }
+    };
+
     const resultComponent = (result: typeof resultOperators) => {
         return (
             <>
@@ -129,6 +136,10 @@ function SelectTags() {
             </Button>
             <Button variant="contained" color="secondary" onClick={loadClipBoardImage} sx={{ display: 'block', margin: '20px auto' }}>
                 公開求人の画像をペーストして解析する(BETA)
+            </Button>
+            <Button variant="contained" component="label" sx={{ display: 'block', margin: '20px auto' }}>
+                公開求人の画像をアップロードして解析する(BETA)
+                <input type="file" accept="image/*" hidden onChange={handleFileUpload} />
             </Button>
             {resultComponent(resultOperators)}
         </>
