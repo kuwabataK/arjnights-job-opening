@@ -2,6 +2,8 @@ import { Card, CardContent, Chip, Typography, Grid, Table, TableBody, TableCell,
 import tags from '../data/tags.json';
 import { useState } from 'react';
 import useCalcOperator from '../hook/useCalcOperator';
+import OCR from '../util/OCR';
+import usePasteImage from '../hook/usePasteImage';
 
 function SelectTags() {
     const { getAvailableOperators } = useCalcOperator();
@@ -43,6 +45,13 @@ function SelectTags() {
         };
         return rareColors[rare];
     };
+
+    const recognaizeTagFromClipboadImage = async (imageFile:File) => {
+        const detectedTags = await OCR.recognizeImageAndTag(imageFile);
+        setSelectedTagIds(detectedTags);
+    }
+
+    const {loadClipBoardImage} = usePasteImage({callback: recognaizeTagFromClipboadImage})
 
     const resultComponent = (result: typeof resultOperators) => {
         return (
@@ -117,6 +126,9 @@ function SelectTags() {
             </TableContainer>
             <Button variant="contained" color="primary" onClick={resetTags} sx={{ display: 'block', margin: '20px auto' }}>
                 リセット
+            </Button>
+            <Button variant="contained" color="secondary" onClick={loadClipBoardImage} sx={{ display: 'block', margin: '20px auto' }}>
+                公開求人の画像をペーストして解析する(BETA)
             </Button>
             {resultComponent(resultOperators)}
         </>
