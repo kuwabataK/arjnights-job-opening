@@ -16,7 +16,8 @@ export default class OCR {
 
         return new Promise((resolve) => {
             const image = new Image();
-            image.src = URL.createObjectURL(imageFile);
+            const src = URL.createObjectURL(imageFile);
+            image.src = src;
             image.onload = () => {
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
@@ -49,6 +50,7 @@ export default class OCR {
                     canvas.toBlob(blob => {
                         if (!blob) return;
                         const file = new File([blob], 'inverted.png', { type: 'image/png' });
+                        URL.revokeObjectURL(src);
                         resolve(file);
                     });
                 };
