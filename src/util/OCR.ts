@@ -22,7 +22,7 @@ const convertCharList = {
 
 export default class OCR {
 
-    static async imvertImage(imageFile: File): Promise<File> {
+    static async preProcessingImage(imageFile: File): Promise<File> {
 
         return new Promise((resolve) => {
             const image = new Image();
@@ -92,8 +92,8 @@ export default class OCR {
      * @returns 
      */
     static async recognizeImageAndTag(imageFile: File): Promise<string[]> {
-        const invertedImage = await this.imvertImage(imageFile);
-        const text = await this.recognize(invertedImage);
+        const preProcessedImage = await this.preProcessingImage(imageFile);
+        const text = await this.recognize(preProcessedImage);
         // Textのスペースや改行を削除する
         // 狙の文字列を狙撃に変換する
         // 先を先鋒に変換する
