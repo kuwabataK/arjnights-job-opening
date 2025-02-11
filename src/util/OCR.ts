@@ -24,7 +24,7 @@ const convertCharList = {
 
 export default class OCR {
 
-    static async preProcessingImage(imageFile: File): Promise<File> {
+    static async preProcessingImage(imageFile: File, threshold: number): Promise<File> {
 
         return new Promise((resolve) => {
             const image = new Image();
@@ -40,12 +40,13 @@ export default class OCR {
                 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
 
-                // 真っ白以外の色をすべて黒にする
+                // 特定の濃度以下の色をすべて黒にする
                 for (let i = 0; i < imageData.data.length; i += 4) {
                     const r = imageData.data[i];
                     const g = imageData.data[i + 1];
                     const b = imageData.data[i + 2];
-                    if (r !== 255 || g !== 255 || b !== 255) {
+                    const brightness = (r + g + b) / 3;
+                    if (brightness < threshold) {
                         imageData.data[i] = 0;
                         imageData.data[i + 1] = 0;
                         imageData.data[i + 2] = 0;
@@ -88,13 +89,8 @@ export default class OCR {
         return text;
     }
 
-    /**
-     * 引数に指定された画像ファイルからタグの名前の一覧を抽出する
-     * @param imageFile 
-     * @returns 
-     */
-    static async recognizeImageAndTag(imageFile: File): Promise<string[]> {
-        const preProcessedImage = await this.preProcessingImage(imageFile);
+    static async _recognizeImageAndTag(imageFile: File,threshold: number): Promise<string[]> {
+        const preProcessedImage = await this.preProcessingImage(imageFile,threshold);
         const text = await this.recognize(preProcessedImage);
         // Textのスペースや改行を削除する
         // 狙の文字列を狙撃に変換する
@@ -110,5 +106,21 @@ export default class OCR {
         const detectedTags = tagNames.filter(tagName => cleanedText.includes(tagName));
         console.log('抽出されたタグ一覧', detectedTags);
         return detectedTags;
+    }
+
+    /**
+     * 引数に指定された画像ファイルからタグの名前の一覧を抽出する
+     * @param imageFile 
+     * @returns 
+     */
+    static async recognizeImageAndTag(imageFile: File): Promise<string[]> {
+        let tags = await this._recognizeImageAndTag(imageFile, 255);
+        let threshold = 255;
+        // 環境によって黒塗りにする適切な閾値が違うので、タグが3つ以上抽出されるまで段階的に閾値を下げて検証を行う
+        while (tags.length < 3 && threshold > 0) {
+            threshold -= 20;
+            tags = await this._recognizeImageAndTag(imageFile, threshold);
+        }
+        return tags;
     }
 }
