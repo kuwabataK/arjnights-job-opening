@@ -56,8 +56,11 @@ function SelectTags() {
     const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
+            console.log(file);
             await recognaizeTagFromClipboadImage(file);
         }
+        // clear the file input
+        event.target.value = '';
     };
 
     const resultComponent = (result: typeof resultOperators) => {
