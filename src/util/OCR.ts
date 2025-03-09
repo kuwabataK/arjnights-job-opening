@@ -23,6 +23,7 @@ const convertCharList = {
     '支': '支援',
     '範': '範囲攻撃',
     '化': '弱化',
+    "召": "召喚",
 }
 
 
@@ -93,8 +94,8 @@ export default class OCR {
         return text;
     }
 
-    static async _recognizeImageAndTag(imageFile: File,threshold: number): Promise<string[]> {
-        const preProcessedImage = await this.preProcessingImage(imageFile,threshold);
+    static async _recognizeImageAndTag(imageFile: File, threshold: number): Promise<string[]> {
+        const preProcessedImage = await this.preProcessingImage(imageFile, threshold);
         const text = await this.recognize(preProcessedImage);
         // Textのスペースや改行を削除する
         // 狙の文字列を狙撃に変換する
