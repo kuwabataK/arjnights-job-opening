@@ -1,4 +1,4 @@
-import { Card, CardContent, Chip, Typography, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Paper, Button } from '@mui/material';
+import { Card, CardContent, Chip, Typography, Grid, Table, TableBody, TableCell, TableContainer, TableRow, Paper, Button, Box, useTheme, useMediaQuery } from '@mui/material';
 import tags from '../data/tags.json';
 import { useState } from 'react';
 import useCalcOperator from '../hook/useCalcOperator';
@@ -6,6 +6,9 @@ import OCR from '../util/OCR';
 import usePasteImage from '../hook/usePasteImage';
 
 function SelectTags() {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
     const { getAvailableOperators } = useCalcOperator();
     const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
 
@@ -106,24 +109,25 @@ function SelectTags() {
     }, {} as Record<string, typeof tags>);
 
     return (
-        <>
-            <TableContainer component={Paper} sx={{ width: 800, margin: '0 auto' }}>
-                <Table>
+        <Box sx={{ width: '100%', px: { xs: 1, sm: 2, md: 3 } }}>
+            <TableContainer component={Paper} sx={{ maxWidth: 800, width: '100%', margin: '0 auto' }}>
+                <Table size={isMobile ? "small" : "medium"}>
                     <TableBody>
                         {Object.entries(groupedTags).map(([category, tags]) => (
                             <TableRow key={category}>
-                                <TableCell>
-                                    <Typography variant="h6">{category}</Typography>
+                                <TableCell sx={{ width: isMobile ? '30%' : '20%' }}>
+                                    <Typography variant={isMobile ? "subtitle1" : "h6"}>{category}</Typography>
                                 </TableCell>
                                 <TableCell>
-                                    <Grid container spacing={1}>
+                                    <Grid container spacing={isMobile ? 0.5 : 1}>
                                         {tags.map(tag => (
-                                            <Grid item key={tag.name}>
+                                            <Grid item key={tag.name} sx={{ mb: isMobile ? 0.5 : 1 }}>
                                                 <Chip
                                                     label={tag.name}
                                                     color="success"
                                                     variant={isSelected(tag.name) ? 'filled' : 'outlined'}
                                                     onClick={() => toggleTag(tag.name)}
+                                                    size={isMobile ? "small" : "medium"}
                                                 />
                                             </Grid>
                                         ))}
@@ -134,18 +138,43 @@ function SelectTags() {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Button variant="contained" color="primary" onClick={resetTags} sx={{ display: 'block', margin: '20px auto' }}>
-                リセット
-            </Button>
-            <Button variant="contained" color="secondary" onClick={loadClipBoardImage} sx={{ display: 'block', margin: '20px auto' }}>
-                公開求人の画像をペーストして解析する(BETA)
-            </Button>
-            <Button variant="contained" component="label" sx={{ display: 'block', margin: '20px auto' }}>
-                公開求人の画像をアップロードして解析する(BETA)
-                <input type="file" accept="image/*" hidden onChange={handleFileUpload} />
-            </Button>
-            {resultComponent(resultOperators)}
-        </>
+            
+            <Box sx={{ maxWidth: 800, width: '100%', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 2, mt: 2 }}>
+                <Button 
+                    variant="contained" 
+                    color="primary" 
+                    onClick={resetTags} 
+                    fullWidth
+                    size={isMobile ? "medium" : "large"}
+                >
+                    リセット
+                </Button>
+                
+                <Button 
+                    variant="contained" 
+                    color="secondary" 
+                    onClick={loadClipBoardImage} 
+                    fullWidth
+                    size={isMobile ? "medium" : "large"}
+                >
+                    公開求人の画像をペーストして解析する(BETA)
+                </Button>
+                
+                <Button 
+                    variant="contained" 
+                    component="label" 
+                    fullWidth
+                    size={isMobile ? "medium" : "large"}
+                >
+                    公開求人の画像をアップロードして解析する(BETA)
+                    <input type="file" accept="image/*" hidden onChange={handleFileUpload} />
+                </Button>
+            </Box>
+            
+            <Box sx={{ maxWidth: 800, width: '100%', margin: '0 auto', mt: 2 }}>
+                {resultComponent(resultOperators)}
+            </Box>
+        </Box>
     );
 }
 
